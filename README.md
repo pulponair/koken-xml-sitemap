@@ -17,7 +17,7 @@ Next click on setup and configure the plugins behavior.
 You need to provide a sitemap url!
 
 **Example setup**
-![ScreenShot](http://i.imgur.com/Epsenec.png)
+![ScreenShot](http://i.imgur.com/m19cPmG.png)
 
 When finished: enabled the plugin
 
