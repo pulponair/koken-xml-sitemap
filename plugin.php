@@ -20,6 +20,7 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 		parent::set_data($data);
 
 		if ($this->isFrontend() && $this->isSitemapUrl()) {
+			//var_dump($this->data);
 			$xmlSitemap = $this->buildXmlSitemap();
 			$this->outputXmlSitemapAndExit($xmlSitemap);
 		}
@@ -72,13 +73,17 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 * @return void
 	 */
 	protected function outputXmlSitemapAndExit(SimpleXMLElement $xmlSitemap){
-		$dom = new DomDocument();
-		$dom->loadXML($xmlSitemap->asXML());
-		$dom->formatOutput = true;
+		$content = $xmlSitemap->asXML();
+		if ($this->data->beautify_xml === TRUE) {
+			$dom = new DomDocument();
+			$dom->loadXML($content);
+			$dom->formatOutput = true;
+			$content = $dom->saveXML();
+		}
 
-		$content = $dom->saveXML();
-
-		Koken::cache($content);
+		if ($this->data->disable_caching !== TRUE) {
+			Koken::cache($content);
+		}
 
 		header("Content-type: text/xml; charset=utf-8");
 		echo $content;

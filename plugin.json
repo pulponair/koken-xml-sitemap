@@ -12,6 +12,18 @@
 			"label": "Sitemap url",
 			"type": "string",
 			"info": "Relataive url the sitemap should by reachable under. E.g /sitemap.xml"
+		},
+
+		"beautify_xml": {
+			"label": "Beautify XML",
+			"info": "Beautify the XML for better human readability. This is useful if you want to check the sitemap manually ",
+			"type": "boolean"
+		},
+
+		"disable_caching": {
+			"label": "Disable Caching",
+			"info": "Disbales caching of the generate xml sitemap. This is useful for debug purpose",
+			"type": "boolean"
 		}
 	},
 
