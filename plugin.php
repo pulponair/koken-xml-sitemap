@@ -1,5 +1,5 @@
 <?php
-class PulonairTest extends KokenPlugin {
+class PulonairXmlSitemapTest extends KokenPlugin {
 
 	/**
 	 * Constructor
@@ -8,7 +8,14 @@ class PulonairTest extends KokenPlugin {
 		$this->require_setup = true;
 	}
 
-
+	/**
+	 * Sets the plugin data.
+	 * We do highjack this function since it is the last opportuny hock in before we get redirected
+	 * to the 404 error page for a non existing url. Hopefully the will be hook in future koken versions.
+	 *
+	 * @param array $data
+	 * @return void
+	 */
 	public function set_data($data) {
 		parent::set_data($data);
 		if ($this->isFrontend() && $this->isSitemapUrl()) {
@@ -52,11 +59,13 @@ class PulonairTest extends KokenPlugin {
 	}
 
 	/**
-	 * @param $parent
-	 * @param $item
+	 * Adds an url xml child to a given parent
+	 *
+	 * @param SimpleXMLElement $parent
+	 * @param array $item
 	 * @param string $changeFreq
 	 * @param string $priority
-	 * @return mixed
+	 * @return SimpleXMLElement
 	 */
 	protected function addUrlChild($parent, $item, $changeFreq = 'daily', $priority = '1.0') {
 		$urlChild = $parent->addChild('url');
@@ -69,10 +78,12 @@ class PulonairTest extends KokenPlugin {
 	}
 
 	/**
-	 * @param $parent
-	 * @param $item
+	 * Adds an url image child to a given parent
+	 *
+	 * @param SimpleXMLElement $parent
+	 * @param array $item
 	 * @param string $preset
-	 * @return mixed
+	 * @return SimpleXMLElement
 	 */
 	protected function addImageChild($parent, $item, $preset = 'large') {
 		$imageChild = $parent->addChild('image:image', null, 'http://www.google.com/schemas/sitemap-image/1.1');
@@ -82,7 +93,6 @@ class PulonairTest extends KokenPlugin {
 
 		return $imageChild;
 	}
-
 
 
 	/**

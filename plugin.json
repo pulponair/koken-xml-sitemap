@@ -1,17 +1,17 @@
 {
-	"name": "Test",
-	"version": "1.1",
-	"description": "Testing",
+	"name": "XML Sitemap",
+	"version": "1.0",
+	"description": "Generates a xml sitemap that can be submited to search engines like Google, Bing etc.",
 	"demo": "http://ontheroad.pulponair.de",
 	"author": {
 		"name": "Nikolas Hagelstein",
-		"link": "http://ontheroad.pulponair.de"
+		"link": "http://ontheroad.pulponair.de/sitemap.xml"
 	},
 	"data": {
 		"sitemap_url": {
 			"label": "Sitemap url",
 			"type": "string",
-			"info": "blabla"
+			"info": "Relataive url the sitemap should by reachable under. E.g /sitemap.xml"
 		}
 	},
 
