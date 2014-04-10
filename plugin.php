@@ -125,10 +125,7 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 */
 	protected function addImageChild($parent, $item) {
 		$imageChild = $parent->addChild('image:image', null, self::IMAGE_NS);
-		/*
-		$imageChild->addChild('image:loc', $item['presets'][$this->data->image_loc_preset]['url'],
-			self::IMAGE_NS);
-		*/
+		$imageChild->addChild('image:loc', $item['presets'][$this->data->image_loc_preset]['url'], self::IMAGE_NS);
 		$imageChild->addChild('image:title',$item['title'], self::IMAGE_NS);
 
 		return $imageChild;
