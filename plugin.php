@@ -1,6 +1,7 @@
 <?php
 class PulonairXmlSitemapTest extends KokenPlugin {
-
+	const NS = 'http://www.sitemaps.org/schemas/sitemap/0.9';
+	const IMAGE_NS = 'http://www.google.com/schemas/sitemap-image/1.1';
 	/**
 	 * Constructor
 	 */
@@ -32,9 +33,8 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 * @return SimpleXMLElement
 	 */
 	protected function buildXmlSitemap() {
-		$urlset  = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset ' .
-			'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" ' .
-			'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" />' .
+		$urlset  = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>'.
+			'<urlset xmlns="' . self::NS . ' xmlns:image="' . self::IMAGE_NS . '" />' .
 			'<!--?xml version="1.0" encoding="UTF-8"?-->');
 
 		// Pages
@@ -105,12 +105,12 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 * @param string $priority
 	 * @return SimpleXMLElement
 	 */
-	protected function addUrlChild($parent, $item, $changeFreq = 'daily', $priority = '1.0') {
+	protected function addUrlChild($parent, $item, $changeFreq = 'weekly', $priority = '1.0') {
 		$urlChild = $parent->addChild('url');
 		$urlChild->addChild('loc', $item['url']);
 		$urlChild->addChild('lastmod', date('Y-m-d', $item['modified_on']['timestamp']));
-		$urlChild->addChild('changefreq', 'weekly');
-		$urlChild->addChild('priority', '1.0');
+		$urlChild->addChild('changefreq', $changeFreq);
+		$urlChild->addChild('priority', $priority);
 
 		return $urlChild;
 	}
@@ -124,10 +124,10 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 * @return SimpleXMLElement
 	 */
 	protected function addImageChild($parent, $item, $preset = 'large') {
-		$imageChild = $parent->addChild('image:image', null, 'http://www.google.com/schemas/sitemap-image/1.1');
+		$imageChild = $parent->addChild('image:image', null, self::IMAGE_NS);
 		$imageChild->addChild('image:loc', $item['presets'][$preset]['url'],
 			'http://www.google.com/schemas/sitemap-image/1.1');
-		$imageChild->addChild('image:title',$item['title'], 'http://www.google.com/schemas/sitemap-image/1.1');
+		$imageChild->addChild('image:title',$item['title'], self::IMAGE_NS);
 
 		return $imageChild;
 	}
