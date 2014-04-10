@@ -14,6 +14,24 @@
 			"info": "Relataive url the sitemap should by reachable under. E.g /sitemap.xml"
 		},
 
+		"exclude_pages": {
+			"label": "Exclude pages",
+			"info": "Exclude pages from sitemap",
+			"type": "boolean"
+		},
+
+		"exclude_essays": {
+			"label": "Exclude essays",
+			"info": "Exclude essays from sitemap",
+			"type": "boolean"
+		},
+
+		"exclude_albums": {
+			"label": "Exclude albums",
+			"info": "Exclude albums from sitemap",
+			"type": "boolean"
+		},
+
 		"beautify_xml": {
 			"label": "Beautify XML",
 			"info": "Beautify the XML for better human readability. This is useful if you want to check the sitemap manually ",

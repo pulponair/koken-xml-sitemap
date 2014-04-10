@@ -38,28 +38,34 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 			'<!--?xml version="1.0" encoding="UTF-8"?-->');
 
 		// Pages
-		list($apiUrl)  = Koken::load(array('source' => 'pages'));
-		$items = Koken::api($apiUrl);
-		foreach ($items['text'] as $item) {
-			$this->addUrlChild($urlset, $item);
+		if ($this->data->exclude_pages !== TRUE) {
+			list($apiUrl)  = Koken::load(array('source' => 'pages'));
+			$items = Koken::api($apiUrl);
+			foreach ($items['text'] as $item) {
+				$this->addUrlChild($urlset, $item);
+			}
 		}
 
 		// Essays
-		list($apiUrl) = Koken::load(array('source' => 'essays'));
-		$items = Koken::api($apiUrl);
-		foreach ($items['text'] as $item) {
-			$this->addUrlChild($urlset, $item);
+		if ($this->data->exclude_essays !== TRUE) {
+			list($apiUrl) = Koken::load(array('source' => 'essays'));
+			$items = Koken::api($apiUrl);
+			foreach ($items['text'] as $item) {
+				$this->addUrlChild($urlset, $item);
+			}
 		}
 
 		// Albums
-		list($apiUrl) = Koken::load(array('source' => 'albums'));
-		$items = Koken::api($apiUrl);
-		foreach ($items['albums'] as $item) {
-			$url = $this->addUrlChild($urlset, $item);
-			$itemImages = Koken::api('/albums/'. $item['id'] . '/content');
-			foreach ($itemImages['content'] as $itemImage) {
-				$this->addUrlChild($urlset, $itemImage);
-				$this->addImageChild($url,$itemImage);
+		if ($this->data->exclude_albums !== TRUE) {
+			list($apiUrl) = Koken::load(array('source' => 'albums'));
+			$items = Koken::api($apiUrl);
+			foreach ($items['albums'] as $item) {
+				$url = $this->addUrlChild($urlset, $item);
+				$itemImages = Koken::api('/albums/'. $item['id'] . '/content');
+				foreach ($itemImages['content'] as $itemImage) {
+					$this->addUrlChild($urlset, $itemImage);
+					$this->addImageChild($url,$itemImage);
+				}
 			}
 		}
 
