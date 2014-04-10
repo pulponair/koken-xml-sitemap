@@ -10,76 +10,79 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 
 	/**
 	 * Sets the plugin data.
-	 * We do highjack this function since it is the last opportuny hock in before we get redirected
-	 * to the 404 error page for a non existing url. Hopefully the will be hook in future koken versions.
+	 * We do highjack this function since it is the last opportunity to hock in before we get redirected
+	 * to the 404 error page for a non existing url. Hopefully there will be hook in future koken versions.
 	 *
 	 * @param array $data
 	 * @return void
 	 */
 	public function set_data($data) {
 		parent::set_data($data);
+
 		if ($this->isFrontend() && $this->isSitemapUrl()) {
+			$xmlSitemap = $this->buildXmlSitemap();
+			$this->outputXmlSitemapAndExit($xmlSitemap);
+		}
+	}
 
-			$urlset  = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset ' .
-				'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" ' .
-				'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" />' .
-				'<!--?xml version="1.0" encoding="UTF-8"?-->');
+	/**
+	 * Builds the xml sitemap
+	 *
+	 * @return SimpleXMLElement
+	 */
+	protected function buildXmlSitemap() {
+		$urlset  = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><urlset ' .
+			'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" ' .
+			'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" />' .
+			'<!--?xml version="1.0" encoding="UTF-8"?-->');
 
-			// Pages
-			list($apiUrl)  = Koken::load(array('source' => 'pages'));
-			$items = Koken::api($apiUrl);
-			foreach ($items['text'] as $item) {
-				$this->addUrlChild($urlset, $item);
-			}
-
-			// Essays
-			list($apiUrl) = Koken::load(array('source' => 'essays'));
-			$items = Koken::api($apiUrl);
-			foreach ($items['text'] as $item) {
-				$this->addUrlChild($urlset, $item);
-			}
-
-			// Albums
-			list($apiUrl) = Koken::load(array('source' => 'albums'));
-			$items = Koken::api($apiUrl);
-			foreach ($items['albums'] as $item) {
-				$url = $this->addUrlChild($urlset, $item);
-				$itemImages = Koken::api('/albums/'. $item['id'] . '/content');
-				foreach ($itemImages['content'] as $itemImage) {
-					$this->addUrlChild($urlset, $itemImage);
-					$this->addImageChild($url,$itemImage);
-				}
-			}
-
-			/*
-				var_dump($items);
-
-
-
-				echo '<pre>';
-				$albums = Koken::api('/albums');
-				//var_dump($albums);
-				//var_dump(Koken::api('/albums/1/content'));
-				$dom = new DomDocument();
-				$dom->loadXML($urlset->asXML());
-				$dom->formatOutput = true;
-				echo $dom->saveXML();
-				//var_dump($urlset->asXML());
-
-				echo '</pre>';
-				exit;
-			*/
-			$dom = new DomDocument();
-			$dom->loadXML($urlset->asXML());
-			$dom->formatOutput = true;
-			$content = $dom->saveXML();
-
-			Koken::cache($content);
-
-			header("Content-type: text/xml; charset=utf-8");
-			echo $content;
+		// Pages
+		list($apiUrl)  = Koken::load(array('source' => 'pages'));
+		$items = Koken::api($apiUrl);
+		foreach ($items['text'] as $item) {
+			$this->addUrlChild($urlset, $item);
 		}
 
+		// Essays
+		list($apiUrl) = Koken::load(array('source' => 'essays'));
+		$items = Koken::api($apiUrl);
+		foreach ($items['text'] as $item) {
+			$this->addUrlChild($urlset, $item);
+		}
+
+		// Albums
+		list($apiUrl) = Koken::load(array('source' => 'albums'));
+		$items = Koken::api($apiUrl);
+		foreach ($items['albums'] as $item) {
+			$url = $this->addUrlChild($urlset, $item);
+			$itemImages = Koken::api('/albums/'. $item['id'] . '/content');
+			foreach ($itemImages['content'] as $itemImage) {
+				$this->addUrlChild($urlset, $itemImage);
+				$this->addImageChild($url,$itemImage);
+			}
+		}
+
+		return $urlset;
+	}
+
+	/**
+	 * Outputs the xml sitemap
+	 *
+	 * @param SimpleXMLElement $xmlSitemap
+	 * @return void
+	 */
+	protected function outputXmlSitemapAndExit(SimpleXMLElement $xmlSitemap){
+		$dom = new DomDocument();
+		$dom->loadXML($xmlSitemap->asXML());
+		$dom->formatOutput = true;
+
+		$content = $dom->saveXML();
+
+		Koken::cache($content);
+
+		header("Content-type: text/xml; charset=utf-8");
+		echo $content;
+		exit;
 	}
 
 	/**
@@ -117,7 +120,6 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 
 		return $imageChild;
 	}
-
 
 	/**
 	 * Checks if we are on frontend and not api or backend
