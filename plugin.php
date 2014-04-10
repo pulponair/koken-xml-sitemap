@@ -52,29 +52,32 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 			}
 
 			/*
-
-						var_dump($items);
-
+				var_dump($items);
 
 
-						echo '<pre>';
-						$albums = Koken::api('/albums');
-						//var_dump($albums);
-						//var_dump(Koken::api('/albums/1/content'));
-						$dom = new DomDocument();
-						$dom->loadXML($urlset->asXML());
-						$dom->formatOutput = true;
-						echo $dom->saveXML();
-						//var_dump($urlset->asXML());
 
-						echo '</pre>';
-						exit;
+				echo '<pre>';
+				$albums = Koken::api('/albums');
+				//var_dump($albums);
+				//var_dump(Koken::api('/albums/1/content'));
+				$dom = new DomDocument();
+				$dom->loadXML($urlset->asXML());
+				$dom->formatOutput = true;
+				echo $dom->saveXML();
+				//var_dump($urlset->asXML());
+
+				echo '</pre>';
+				exit;
 			*/
-			header("Content-type: text/xml; charset=utf-8");
 			$dom = new DomDocument();
 			$dom->loadXML($urlset->asXML());
 			$dom->formatOutput = true;
-			echo $dom->saveXML();
+			$content = $dom->saveXML();
+
+			Koken::cache($content);
+
+			header("Content-type: text/xml; charset=utf-8");
+			echo $content;
 		}
 
 	}
