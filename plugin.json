@@ -1,0 +1,19 @@
+{
+	"name": "Test",
+	"version": "1.1",
+	"description": "Testing",
+	"demo": "http://ontheroad.pulponair.de",
+	"author": {
+		"name": "Nikolas Hagelstein",
+		"link": "http://ontheroad.pulponair.de"
+	},
+	"data": {
+		"sitemap_url": {
+			"label": "Sitemap url",
+			"type": "string",
+			"info": "blabla"
+		}
+	},
+
+	"koken_version_required": "0.2.0"
+}
