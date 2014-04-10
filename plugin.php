@@ -25,6 +25,7 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 			$xmlSitemap = $this->buildXmlSitemap();
 			$this->outputXmlSitemapAndExit($xmlSitemap);
 		}
+
 	}
 
 	/**
@@ -33,8 +34,8 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 * @return SimpleXMLElement
 	 */
 	protected function buildXmlSitemap() {
-		$urlset  = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>'.
-			'<urlset xmlns="' . self::NS . ' xmlns:image="' . self::IMAGE_NS . '" />' .
+		$urlset = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>' .
+			'<urlset xmlns="' . self::NS . '" xmlns:image="' . self::IMAGE_NS . '" />' .
 			'<!--?xml version="1.0" encoding="UTF-8"?-->');
 
 		// Pages
@@ -120,13 +121,14 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 *
 	 * @param SimpleXMLElement $parent
 	 * @param array $item
-	 * @param string $preset
 	 * @return SimpleXMLElement
 	 */
-	protected function addImageChild($parent, $item, $preset = 'large') {
+	protected function addImageChild($parent, $item) {
 		$imageChild = $parent->addChild('image:image', null, self::IMAGE_NS);
-		$imageChild->addChild('image:loc', $item['presets'][$preset]['url'],
-			'http://www.google.com/schemas/sitemap-image/1.1');
+		/*
+		$imageChild->addChild('image:loc', $item['presets'][$this->data->image_loc_preset]['url'],
+			self::IMAGE_NS);
+		*/
 		$imageChild->addChild('image:title',$item['title'], self::IMAGE_NS);
 
 		return $imageChild;
