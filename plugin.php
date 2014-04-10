@@ -2,6 +2,7 @@
 class PulonairXmlSitemapTest extends KokenPlugin {
 	const NS = 'http://www.sitemaps.org/schemas/sitemap/0.9';
 	const IMAGE_NS = 'http://www.google.com/schemas/sitemap-image/1.1';
+
 	/**
 	 * Constructor
 	 */
@@ -11,7 +12,7 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 
 	/**
 	 * Sets the plugin data.
-	 * We do highjack this function since it is the last opportunity to hock in before we get redirected
+	 * We need to highjack this function since it is the last opportunity to hock in before we get redirected
 	 * to the 404 error page for a non existing url. Hopefully there will be hook in future koken versions.
 	 *
 	 * @param array $data
@@ -21,7 +22,6 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 		parent::set_data($data);
 
 		if ($this->isFrontend() && $this->isSitemapUrl()) {
-			//var_dump($this->data);
 			$xmlSitemap = $this->buildXmlSitemap();
 			$this->outputXmlSitemapAndExit($xmlSitemap);
 		}
