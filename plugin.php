@@ -24,14 +24,22 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 				'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" ' .
 				'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" />' .
 				'<!--?xml version="1.0" encoding="UTF-8"?-->');
+
 			// Pages
 			list($apiUrl)  = Koken::load(array('source' => 'pages'));
 			$items = Koken::api($apiUrl);
 			foreach ($items['text'] as $item) {
-				$url = $this->addUrlChild($urlset, $item);
+				$this->addUrlChild($urlset, $item);
 			}
 
-			// Ablums
+			// Essays
+			list($apiUrl) = Koken::load(array('source' => 'essays'));
+			$items = Koken::api($apiUrl);
+			foreach ($items['text'] as $item) {
+				$this->addUrlChild($urlset, $item);
+			}
+
+			// Albums
 			list($apiUrl) = Koken::load(array('source' => 'albums'));
 			$items = Koken::api($apiUrl);
 			foreach ($items['albums'] as $item) {
@@ -42,7 +50,9 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 					$this->addImageChild($url,$itemImage);
 				}
 			}
+
 			/*
+
 						var_dump($items);
 
 
