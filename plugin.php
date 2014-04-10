@@ -24,31 +24,42 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 				'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" ' .
 				'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" />' .
 				'<!--?xml version="1.0" encoding="UTF-8"?-->');
-
-			$albums = Koken::api('/albums');
-			foreach ($albums['albums'] as $album) {
-				$url = $this->addUrlChild($urlset, $album);
-				$albumImages = Koken::api('/albums/'. $album['id'] . '/content');
-				foreach ($albumImages['content'] as $albumImage) {
-					$this->addUrlChild($urlset, $albumImage);
-					$this->addImageChild($url,$albumImage);
-				}
+			// Pages
+			list($apiUrl)  = Koken::load(array('source' => 'pages'));
+			$items = Koken::api($apiUrl);
+			foreach ($items['text'] as $item) {
+				$url = $this->addUrlChild($urlset, $item);
 			}
 
-/*
-			echo '<pre>';
-			$albums = Koken::api('/albums');
-			//var_dump($albums);
-			//var_dump(Koken::api('/albums/1/content'));
-			$dom = new DomDocument();
-			$dom->loadXML($urlset->asXML());
-			$dom->formatOutput = true;
-			echo $dom->saveXML();
-			//var_dump($urlset->asXML());
+			// Ablums
+			list($apiUrl) = Koken::load(array('source' => 'albums'));
+			$items = Koken::api($apiUrl);
+			foreach ($items['albums'] as $item) {
+				$url = $this->addUrlChild($urlset, $item);
+				$itemImages = Koken::api('/albums/'. $item['id'] . '/content');
+				foreach ($itemImages['content'] as $itemImage) {
+					$this->addUrlChild($urlset, $itemImage);
+					$this->addImageChild($url,$itemImage);
+				}
+			}
+			/*
+						var_dump($items);
 
-			echo '</pre>';
-			exit;
-*/
+
+
+						echo '<pre>';
+						$albums = Koken::api('/albums');
+						//var_dump($albums);
+						//var_dump(Koken::api('/albums/1/content'));
+						$dom = new DomDocument();
+						$dom->loadXML($urlset->asXML());
+						$dom->formatOutput = true;
+						echo $dom->saveXML();
+						//var_dump($urlset->asXML());
+
+						echo '</pre>';
+						exit;
+			*/
 			header("Content-type: text/xml; charset=utf-8");
 			$dom = new DomDocument();
 			$dom->loadXML($urlset->asXML());
