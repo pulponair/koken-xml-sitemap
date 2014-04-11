@@ -1,6 +1,6 @@
 koken-xml-sitemap
 =================
-This is a plugin for the koken cms/image publishing system (http://koken.me/).
+This is a plugin for the Koken cms/image publishing system (http://koken.me/).
 It generates an xml sitemap which can be submited to search engines like Google, Bing etc.
 
 ##Usage
@@ -10,7 +10,7 @@ Download or clone this repository and copy everything to:
 storage/plugins/pulponair-xml-sitemap/
 ```
 ###Configure the plugin
-Login to your koken installation and switch to settings->plugin. You should see a new plugin entry called "XML Sitemap". If not you might need to clear the "system caches" and/or reload the koken admin interface.
+Login to your koken installation and switch to settings->plugin. You should see a new plugin entry called "XML Sitemap". If not, you might need to clear the "system caches" and/or reload the koken admin interface.
 
 Next click on setup and configure the plugins behavior.
 You need to provide at least a sitemap url!
@@ -23,7 +23,6 @@ When finished: enabled the plugin
 You can check the output by surfig: http://yourwebsite.tld/[sitemap url]
 
 ##Feedback
-If you are experience any problems or feel that anything is missing, just file an issues an will look into it.
+Should you experience a problem, find a bug or feel that anything is missing, just file an issues and will look into it.
 
-Done :)
-
+Any feedback would be highly appreciated
