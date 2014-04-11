@@ -137,7 +137,8 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 * @return bool
 	 */
 	protected function isFrontend() {
-		return !defined('ENVIRONMENT');
+		// @todo Find a better way, this is just a workaround.
+		return class_exists('Koken') && !defined('ENVIRONMENT');
 	}
 
 	/**
