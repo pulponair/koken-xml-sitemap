@@ -64,10 +64,18 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 				$albumUrl = $this->addUrlChild($urlset, $item);
 				$itemImages = Koken::api('/albums/' . $item['id'] . '/content');
 				foreach ($itemImages['content'] as $itemImage) {
-					$detailImageUrl = $this->addUrlChild($urlset, $itemImage);
 					$this->addImageChild($albumUrl, $itemImage);
-                    $this->addImageChild($detailImageUrl, $itemImage);
 				}
+			}
+		}
+
+		// Content
+		if ($this->data->exclude_content !== TRUE) {
+			list($apiUrl)  = Koken::load(array('source' => 'content'));
+			$items = Koken::api($apiUrl);
+			foreach ($items['content'] as $item) {
+				$imageDetailUrl = $this->addUrlChild($urlset, $item);
+				$this->addImageChild($imageDetailUrl, $itemImage);
 			}
 		}
 

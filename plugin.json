@@ -36,6 +36,12 @@
 			"type": "boolean"
 		},
 
+        "exclude_content": {
+            "label": "Exclude content",
+            "info": "Exclude content aka image detail pages from sitemap",
+            "type": "boolean"
+        },
+
 		"image_loc_preset": {
 			"label": "Image location preset",
 			"type": "select",
@@ -59,7 +65,7 @@
 
 		"disable_caching": {
 			"label": "Disable Caching",
-			"info": "Disbales caching of the generate xml sitemap. This is useful for debug purpose",
+			"info": "Disables caching of the generate xml sitemap. This is useful for debug purpose",
 			"type": "boolean"
 		}
 	},
