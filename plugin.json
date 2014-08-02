@@ -12,6 +12,7 @@
 			"label": "Sitemap url",
 			"type": "string",
 			"info": "Relataive url the sitemap should by reachable under. E.g /sitemap.xml",
+            "value": "/sitemap.xml",
 			"validation": {
 				"type": "not_empty",
 				"error_message": "Please enter a sitemap url!"
@@ -46,6 +47,7 @@
             "label": "Page image location preset",
             "type": "select",
             "info" : "Select which image preset should be used as url within the  \"image:loc\" - tag for pages",
+            "value": "large",
             "options": [
                 { "label": "Use tiny preset url", "value": "tiny" },
                 { "label": "Use small preset url", "value": "small" },
@@ -61,6 +63,7 @@
             "label": "Essay image location preset",
             "type": "select",
             "info" : "Select which image preset should be used as url within the  \"image:loc\" - tag for essays",
+            "value": "large",
             "options": [
                 { "label": "Use tiny preset url", "value": "tiny" },
                 { "label": "Use small preset url", "value": "small" },
@@ -76,6 +79,7 @@
 			"label": "Album image location preset",
 			"type": "select",
 			"info" : "Select which image preset should be used as url within the  \"image:loc\" - tag for albums",
+            "value": "large",
 			"options": [
 				{ "label": "Use tiny preset url", "value": "tiny" },
 				{ "label": "Use small preset url", "value": "small" },
@@ -91,6 +95,7 @@
             "label": "Detail image location preset",
             "type": "select",
             "info" : "Select which image preset should be used as url within the  \"image:loc\" - tag for the image detail page",
+            "value": "large",
             "options": [
                 { "label": "Use tiny preset url", "value": "tiny" },
                 { "label": "Use small preset url", "value": "small" },
