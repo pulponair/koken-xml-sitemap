@@ -37,7 +37,7 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 		$urlset = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>' .
 			'<urlset xmlns="' . self::NS . '" xmlns:image="' . self::IMAGE_NS . '" />' .
 			'<!--?xml version="1.0" encoding="UTF-8"?-->');
-
+/*
 		// Pages
 		if ($this->data->exclude_pages !== TRUE) {
 			list($apiUrl)  = Koken::load(array('source' => 'pages'));
@@ -68,14 +68,15 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 				}
 			}
 		}
-
+*/
 		// Content
 		if ($this->data->exclude_content !== TRUE) {
 			list($apiUrl)  = Koken::load(array('source' => 'content'));
 			$items = Koken::api($apiUrl);
+
 			foreach ($items['content'] as $item) {
 				$imageDetailUrl = $this->addUrlChild($urlset, $item);
-				$this->addImageChild($imageDetailUrl, $itemImage);
+				$this->addImageChild($imageDetailUrl, $item);
 			}
 		}
 
