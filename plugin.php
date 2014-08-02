@@ -37,7 +37,7 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 		$urlset = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>' .
 			'<urlset xmlns="' . self::NS . '" xmlns:image="' . self::IMAGE_NS . '" />' .
 			'<!--?xml version="1.0" encoding="UTF-8"?-->');
-/*
+
 		// Pages
 		if ($this->data->exclude_pages !== TRUE) {
 			list($apiUrl)  = Koken::load(array('source' => 'pages'));
@@ -64,19 +64,18 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 				$albumUrl = $this->addUrlChild($urlset, $item);
 				$itemImages = Koken::api('/albums/' . $item['id'] . '/content');
 				foreach ($itemImages['content'] as $itemImage) {
-					$this->addImageChild($albumUrl, $itemImage);
+					$this->addImageChild($albumUrl, $itemImage, $this->data->album_image_loc_preset);
 				}
 			}
 		}
-*/
+
 		// Content
 		if ($this->data->exclude_content !== TRUE) {
 			list($apiUrl)  = Koken::load(array('source' => 'content'));
 			$items = Koken::api($apiUrl);
-
 			foreach ($items['content'] as $item) {
 				$imageDetailUrl = $this->addUrlChild($urlset, $item);
-				$this->addImageChild($imageDetailUrl, $item);
+				$this->addImageChild($imageDetailUrl, $item, $this->data->detail_image_loc_preset);
 			}
 		}
 
@@ -133,9 +132,9 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 * @param array $item
 	 * @return SimpleXMLElement
 	 */
-	protected function addImageChild(SimpleXMLElement $parent, $item) {
+	protected function addImageChild(SimpleXMLElement $parent, $item, $preset) {
 		$imageChild = $parent->addChild('image:image', null, self::IMAGE_NS);
-		$imageChild->addChild('image:loc', $item['presets'][$this->data->image_loc_preset]['url'], self::IMAGE_NS);
+		$imageChild->addChild('image:loc', $item['presets'][$preset]['url'], self::IMAGE_NS);
 		$imageChild->addChild('image:title', $item['title'], self::IMAGE_NS);
 
 		return $imageChild;

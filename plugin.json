@@ -42,10 +42,10 @@
             "type": "boolean"
         },
 
-		"image_loc_preset": {
-			"label": "Image location preset",
+		"album_image_loc_preset": {
+			"label": "Album image location preset",
 			"type": "select",
-			"info" : "Select which image preset should be used as url within the  \"image:loc\" - tag.",
+			"info" : "Select which image preset should be used as url within the  \"image:loc\" - tag for albums",
 			"options": [
 				{ "label": "Use tiny preset url", "value": "tiny" },
 				{ "label": "Use small preset url", "value": "small" },
@@ -57,6 +57,20 @@
 			]
 		},
 
+        "detail_image_loc_preset": {
+            "label": "Detail image location preset",
+            "type": "select",
+            "info" : "Select which image preset should be used as url within the  \"image:loc\" - tag for the image detail page",
+            "options": [
+                { "label": "Use tiny preset url", "value": "tiny" },
+                { "label": "Use small preset url", "value": "small" },
+                { "label": "Use medium preset url", "value": "medium" },
+                { "label": "Use medium large preset url", "value": "medium_large" },
+                { "label": "Use large preset url", "value": "large" },
+                { "label": "Use xlarge preset url", "value": "xlarge" },
+                { "label": "Use xhuge preset url", "value": "huge" }
+            ]
+        },
 		"beautify_xml": {
 			"label": "Beautify XML",
 			"info": "Beautify the XML for better human readability. This is useful if you want to check the sitemap manually ",
