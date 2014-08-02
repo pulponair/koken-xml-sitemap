@@ -43,7 +43,12 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 			list($apiUrl)  = Koken::load(array('source' => 'pages'));
 			$items = Koken::api($apiUrl);
 			foreach ($items['text'] as $item) {
-				$this->addUrlChild($urlset, $item);
+				$pageUrl = $this->addUrlChild($urlset, $item);
+				if ($images = $this->extractImagesFormTest($item['content'])) {
+					foreach ($images as $image) {
+						$this->addImageChild($pageUrl, $image, $this->data->page_image_loc_preset);
+					}
+				}
 			}
 		}
 
@@ -52,7 +57,12 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 			list($apiUrl) = Koken::load(array('source' => 'essays'));
 			$items = Koken::api($apiUrl);
 			foreach ($items['text'] as $item) {
-				$this->addUrlChild($urlset, $item);
+				$essayUrl  = $this->addUrlChild($urlset, $item);
+				if ($images = $this->extractImagesFormTest($item['content'])) {
+					foreach ($images as $image) {
+						$this->addImageChild($essayUrl, $image, $this->data->essay_image_loc_preset);
+					}
+				}
 			}
 		}
 
@@ -130,6 +140,7 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 *
 	 * @param SimpleXMLElement $parent
 	 * @param array $item
+	 * @param string $preset;
 	 * @return SimpleXMLElement
 	 */
 	protected function addImageChild(SimpleXMLElement $parent, $item, $preset) {
@@ -138,6 +149,28 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 		$imageChild->addChild('image:title', $item['title'], self::IMAGE_NS);
 
 		return $imageChild;
+	}
+
+	/**
+	 * Extracts images from text
+	 *
+	 * @param $text
+	 * @return array|bool|mixed|string
+	 */
+	protected function extractImagesFormTest($text) {
+		$images = FALSE;
+		preg_match('/filter:id="([^"]*)"/', $text, $matches);
+
+		if ($matches[1]) {
+			list($apiUrl) = koken::load(array('source' => 'contents', 'filter:id'=> $matches[1]));
+			$images = Koken::api($apiUrl);
+			if ($images['content']) {
+				$images = $images['content'];
+			} else {
+				$images = array($images);
+			}
+		}
+		return $images;
 	}
 
 	/**

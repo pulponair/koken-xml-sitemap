@@ -38,9 +38,41 @@
 
         "exclude_content": {
             "label": "Exclude content",
-            "info": "Exclude content aka image detail pages from sitemap",
+            "info": "Exclude content, aka image detail pages, from sitemap",
             "type": "boolean"
         },
+
+        "page_image_loc_preset": {
+            "label": "Page image location preset",
+            "type": "select",
+            "info" : "Select which image preset should be used as url within the  \"image:loc\" - tag for pages",
+            "options": [
+                { "label": "Use tiny preset url", "value": "tiny" },
+                { "label": "Use small preset url", "value": "small" },
+                { "label": "Use medium preset url", "value": "medium" },
+                { "label": "Use medium large preset url", "value": "medium_large" },
+                { "label": "Use large preset url", "value": "large" },
+                { "label": "Use xlarge preset url", "value": "xlarge" },
+                { "label": "Use xhuge preset url", "value": "huge" }
+            ]
+        },
+
+        "essay_image_loc_preset": {
+            "label": "Essay image location preset",
+            "type": "select",
+            "info" : "Select which image preset should be used as url within the  \"image:loc\" - tag for essays",
+            "options": [
+                { "label": "Use tiny preset url", "value": "tiny" },
+                { "label": "Use small preset url", "value": "small" },
+                { "label": "Use medium preset url", "value": "medium" },
+                { "label": "Use medium large preset url", "value": "medium_large" },
+                { "label": "Use large preset url", "value": "large" },
+                { "label": "Use xlarge preset url", "value": "xlarge" },
+                { "label": "Use xhuge preset url", "value": "huge" }
+            ]
+        },
+
+
 
 		"album_image_loc_preset": {
 			"label": "Album image location preset",
