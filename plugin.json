@@ -1,6 +1,6 @@
 {
 	"name": "XML Sitemap",
-	"version": "1.0",
+	"version": "2.0",
 	"description": "Generates a xml sitemap that can be submited to search engines like Google, Bing etc.",
 	"demo": "http://ontheroad.pulponair.de",
 	"author": {
@@ -72,8 +72,6 @@
             ]
         },
 
-
-
 		"album_image_loc_preset": {
 			"label": "Album image location preset",
 			"type": "select",
@@ -103,6 +101,7 @@
                 { "label": "Use xhuge preset url", "value": "huge" }
             ]
         },
+
 		"beautify_xml": {
 			"label": "Beautify XML",
 			"info": "Beautify the XML for better human readability. This is useful if you want to check the sitemap manually ",
