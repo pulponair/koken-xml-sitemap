@@ -42,9 +42,10 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 		if ($this->data->exclude_pages !== TRUE) {
 			list($apiUrl)  = Koken::load(array('source' => 'pages'));
 			$items = Koken::api($apiUrl);
+
 			foreach ($items['text'] as $item) {
 				$pageUrl = $this->addUrlChild($urlset, $item);
-				if ($images = $this->extractImagesFormTest($item['content'])) {
+				if ($images = $this->extractImagesFormText($item['content'])) {
 					foreach ($images as $image) {
 						$this->addImageChild($pageUrl, $image, $this->data->page_image_loc_preset);
 					}
@@ -54,11 +55,11 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 
 		// Essays
 		if ($this->data->exclude_essays !== TRUE) {
-			list($apiUrl) = Koken::load(array('source' => 'essays'));
+			list($apiUrl) = Koken::load(array('source' => 'essays', 'expand' => 1));
 			$items = Koken::api($apiUrl);
 			foreach ($items['text'] as $item) {
 				$essayUrl  = $this->addUrlChild($urlset, $item);
-				if ($images = $this->extractImagesFormTest($item['content'])) {
+				if ($images = $this->extractImagesFormText($item['content'])) {
 					foreach ($images as $image) {
 						$this->addImageChild($essayUrl, $image, $this->data->essay_image_loc_preset);
 					}
@@ -82,11 +83,15 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 		// Content
 		if ($this->data->exclude_content !== TRUE) {
 			list($apiUrl)  = Koken::load(array('source' => 'content'));
-			$items = Koken::api($apiUrl);
-			foreach ($items['content'] as $item) {
-				$imageDetailUrl = $this->addUrlChild($urlset, $item);
-				$this->addImageChild($imageDetailUrl, $item, $this->data->detail_image_loc_preset);
-			}
+			$page = 0;
+			do {
+				$page++;
+				$items = Koken::api($apiUrl . '/page:' . $page);
+				foreach ($items['content'] as $item) {
+					$imageDetailUrl = $this->addUrlChild($urlset, $item);
+					$this->addImageChild($imageDetailUrl, $item, $this->data->detail_image_loc_preset);
+				}
+			} while ($page < $items['pages']);
 		}
 
 		return $urlset;
@@ -157,7 +162,7 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 * @param $text
 	 * @return array|bool|mixed|string
 	 */
-	protected function extractImagesFormTest($text) {
+	protected function extractImagesFormText($text) {
 		$images = FALSE;
 		preg_match('/filter:id="([^"]*)"/', $text, $matches);
 
