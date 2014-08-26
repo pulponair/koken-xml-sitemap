@@ -3,6 +3,8 @@ koken-xml-sitemap
 This is a plugin for the Koken cms/image publishing system (http://koken.me/).
 It generates an xml sitemap which can be submited to search engines like Google, Bing etc.
 
+__NOTE: The plugin does not generate an actual file. It catches the request to a configurable url (e.g. /sitemap.xml) and outputs the sitemap dynamically (Cached though unless explcitly disabled)__
+
 ##Usage
 ###Install
 Download or clone this repository and copy everything to:
