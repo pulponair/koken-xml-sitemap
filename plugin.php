@@ -8,6 +8,35 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 */
 	function __construct() {
 		$this->require_setup = true;
+
+		$this->register_hook('site.url', 'siteUrlHook');
+	}
+
+	/**
+	 * Site url hook for newer koken versions
+	 */
+	public function siteUrlHook() {
+		if ($this->isSitemapUrl()) {
+			if ($cache = Shutter::get_cache($this->getCachePath())) {
+				header('Content-type: text/xml; charset=utf-8');
+				echo $cache['data'];
+				exit;
+			} else {
+				Koken::$cache_path = $this->getCachePath();
+				$xmlSitemap = $this->buildXmlSitemap();
+				$this->outputXmlSitemapAndExit($xmlSitemap);
+
+			}
+		}
+	}
+
+	/**
+	 * Gets the cache path
+	 *
+	 * @return string
+	 */
+	public function getCachePath() {
+		return 'site/sitemap.xml/cache.html';
 	}
 
 	/**
@@ -15,17 +44,17 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 * We need to highjack this function since it is the last opportunity to hock in before we get redirected
 	 * to the 404 error page for a non existing url. Hopefully there will be hook in future koken versions.
 	 *
+	 * This is needed for koken versions prior 0.20
+	 *
 	 * @param array $data
 	 * @return void
 	 */
 	public function set_data($data) {
 		parent::set_data($data);
-
 		if ($this->isFrontend() && $this->isSitemapUrl()) {
 			$xmlSitemap = $this->buildXmlSitemap();
 			$this->outputXmlSitemapAndExit($xmlSitemap);
 		}
-
 	}
 
 	/**
@@ -35,8 +64,7 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 */
 	protected function buildXmlSitemap() {
 		$urlset = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>' .
-			'<urlset xmlns="' . self::NS . '" xmlns:image="' . self::IMAGE_NS . '" />' .
-			'<!--?xml version="1.0" encoding="UTF-8"?-->');
+			'<urlset xmlns="' . self::NS . '" xmlns:image="' . self::IMAGE_NS . '" />');
 
 		// Pages
 		if ($this->data->exclude_pages !== TRUE) {
