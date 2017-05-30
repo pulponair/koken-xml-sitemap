@@ -1,6 +1,6 @@
 {
 	"name": "XML Sitemap",
-	"version": "2.0",
+	"version": "2.1",
 	"description": "Generates a xml sitemap that can be submited to search engines like Google, Bing etc.",
 	"demo": "http://ontheroad.pulponair.de",
 	"author": {
