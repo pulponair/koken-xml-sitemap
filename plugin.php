@@ -169,6 +169,15 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	}
 
 	/**
+	 * @param string $url
+	 *
+	 * @return bool
+	 */
+	protected function urlIsRelative($url){
+		return preg_match('/^http(s)?:\/\//', $url) === 0;
+	}
+
+	/**
 	 * Adds an url image child to a given parent
 	 *
 	 * @param SimpleXMLElement $parent
@@ -178,7 +187,12 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 */
 	protected function addImageChild(SimpleXMLElement $parent, $item, $preset) {
 		$imageChild = $parent->addChild('image:image', null, self::IMAGE_NS);
-		$imageChild->addChild('image:loc', $item['presets'][$preset]['url'], self::IMAGE_NS);
+
+		$imageLoc = $this->urlIsRelative($item['presets'][$preset]['url']) ?
+			Koken::$location['host'] . $item['presets'][$preset]['url'] :
+			$item['presets'][$preset]['url'];
+
+		$imageChild->addChild('image:loc', $imageLoc, self::IMAGE_NS);
 		$imageChild->addChild('image:title', $item['title'], self::IMAGE_NS);
 
 		return $imageChild;
