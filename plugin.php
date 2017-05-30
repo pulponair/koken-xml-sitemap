@@ -186,7 +186,7 @@ class PulonairXmlSitemapTest extends KokenPlugin {
 	 * @return SimpleXMLElement
 	 */
 	protected function addImageChild(SimpleXMLElement $parent, $item, $preset) {
-        echo '<pre>'; var_dump($item); exit;
+        //echo '<pre>'; var_dump($item); exit;
 		$imageChild = $parent->addChild('image:image', null, self::IMAGE_NS);
 
 		$imageLoc = $this->urlIsRelative($item['presets'][$preset]['url']) ?
